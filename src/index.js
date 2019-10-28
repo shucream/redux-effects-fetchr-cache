@@ -52,10 +52,8 @@ export default function fetchrCacheMiddleware(cacheConfig = {}, options = {}) {
     }
 
     return next(action).then((result) => {
-      const meta = {meta: JSON.parse(action.meta.xhr.response)}
-      
       if (!toCache || toCache(action, getState())) {
-        cache.set(key, Object.assign(result, meta));
+        cache.set(key, result);
       }
 
       return result;
