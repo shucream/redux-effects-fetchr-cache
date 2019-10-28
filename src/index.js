@@ -41,8 +41,11 @@ export default function fetchrCacheMiddleware(cacheConfig = {}, options = {}) {
       || (excludes && excludes.indexOf(resource) !== -1)) {
       return next(action);
     }
+    
+    const sortedParams = {}
+    Object.keys(params).sort().forEach((key) => sortedParams[key] = params[key])
 
-    const key = `${resource}@@${JSON.stringify(params)}`;
+    const key = `${resource}@@${JSON.stringify(sortedParams)}`;
     const cachedResult = (!fromCache || fromCache(action, getState())) && cache.get(key);
     if (cachedResult) {
       return Promise.resolve(cachedResult);
