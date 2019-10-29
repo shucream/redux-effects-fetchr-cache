@@ -43,7 +43,7 @@ export default function fetchrCacheMiddleware(cacheConfig = {}, options = {}) {
     }
     
     const sortedParams = {}
-    Object.keys(params).sort().forEach((key) => sortedParams[key] = params[key])
+    Object.keys(params).sort().forEach((key) => sortedParams[key] = params[key].toString())
 
     const key = `${resource}@@${JSON.stringify(sortedParams)}`;
     const cachedResult = (!fromCache || fromCache(action, getState())) && cache.get(key);
